@@ -1,0 +1,46 @@
+language: bash
+env:
+  matrix:
+  - OS=debian DIST=jessie ARCH=armel
+  - OS=debian DIST=jessie ARCH=armhf
+  - OS=raspbian DIST=jessie ARCH=armhf
+  global:
+  - DEBOOTSTRAP=qemu-debootstrap
+  - DEPLOY_HOST=ev3dev-docker-docker.bintray.io
+  - secure: QJBsw/R9AhcA1rVCg+vq5nL4bPNfGKnUfdk9h4ze/66WEp0ncCRacWzp4/9czO2VGutCQ8Wk+uponNkZ0Io2Mjicw2gqERKJorT/J1kGmK/RteUfobIPBFSbBeGZraIaIUVs1ICLqt5Tabiiy1xJvKiL9sdH8gKQnEbt/nGvNaDdDtDOq5qhHOmzye6+KiYAErZxFiA/SHduExlZ2YouEe3d4i38yHFuJjFSdwm2TNq+nYwD0nmLDwSgPjgPWM7qSHIkLAsXpIVblSI2vVr7IawiXuUVinUvIqKakfPH3/08oLMLDPXU2PEdj6iHui8DPEG8W+L6yskHIIC3sEVPCeqJrcGVt8EQzbn2AjpHau/5/Q8nzWP6NC94phFJqRf3XzEjeUkhIY81Ll3Uty8tZdvgzUmxe+I5b04ffuIj40bpYW063Qid+hhTeQl2Y0unNIcTDT8+cBYO4gDvdiGvgJFrzC+3a+LbBq9RJNLMHOOcuJWaUp5e+iL9pqXEn5niUSKJ5RfsnO7WhWaU9xcoki5isUvIt2rznzg+T1OEgg8HtvuCKLH2VzBBPpgzFICZsMKlPPaCFB2KodF36S9qZBm0xf4iusVw/oKvRnIwcCTh41TrMxlxoSbxbXTuiw4/IkDKRiYHyAEGecxYHLHXV+dSGqT+Y86ip+w9ah/sQXc=
+  - secure: deyLb9RiZGOY9mIl+MWxMRdNPe+lESlpXEznPGcYuqexJsgZW4gBVzuOyxYuqWpyUDXd+fF7h1PrYs24BMdaNznVsWfF76KqrE9RbkoYpcYldYcn8Gpx8vSqmHiaZWepwg06ipSiSLWQV+mLhSSl/zpcYK1bOJimTKs/oYiNxfCNQHhnEGii7HTKDvC+NCvo3MWn/G/hq8i2MHXjpsdYkAz4dSEMCjnrcd2KlewiYVz7/LeCXLeQnSExDWYiGUs37HxYZuaKW01pSexpiqR6jsa5J1lszRdBbqoMI74tceN/kVjm77S69su3t4AoyX4FExihHXfuIgaPYAcnaoxwoR9ZDNuDKRMUBUO/RR5XfyBZujgCgEz/g0tKyDMfK78Lyt6eY6dglSiPtlmH17qMYF36bhZklB5OVO1z8HVQqRKOYY056boPa6m0LwUiPklnaxIlLm5w09tHVTpfxijUklpCfJWFOLmUDTt/iGXw1PcFi2Qh47GJ31ljLfXA2HDfvnLuHfGCtfkSEWoQ45H8fPnTJoz3uLvM7BJSaDmkPlJe2qEiFKrGXvk/oHCZu6o6n8RfO6ehzwfMRVLijiSQsVPaqtUwxOnO83ENzwbzCFxPnAbFnFrUFDdr/Nlthfd0iTe6VtLeKSR/aBTV6OH2VIqDcwAfW1meXiOFZ/CeMNk=
+sudo: required
+dist: trusty
+services: docker
+install:
+- >
+  sudo apt-get update -y && sudo apt-get install -y
+  debian-archive-keyring
+  qemu-user-static
+- if [ "$OS" == "raspbian" ]; then
+   wget --directory-prefix=/tmp http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb;
+   sudo dpkg -i /tmp/raspbian-archive-keyring_20120528.2_all.deb;
+   export MIRROR=http://archive.raspbian.org/raspbian;
+  fi
+before_script:
+- docker --version
+- export IMAGE=$OS-$DIST-$ARCH
+script:
+- >
+  sudo -E /usr/share/docker-engine/contrib/mkimage.sh
+  -t $IMAGE
+  debootstrap
+  --keyring=/usr/share/keyrings/$OS-archive-keyring.gpg
+  --arch=$ARCH
+  --variant=minbase
+  $DIST
+  $MIRROR
+after_success:
+- if [ "$TRAVIS_BRANCH" == "base" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    export TAG=$(docker run -i -t $IMAGE cat /etc/debian_version | tr -d '\r\n');
+    docker tag $IMAGE $DEPLOY_HOST/$IMAGE;
+    docker tag $IMAGE $DEPLOY_HOST/$IMAGE:$TAG;
+    docker login -u dlech -p $API_KEY -e $EMAIL $DEPLOY_HOST;
+    docker push $DEPLOY_HOST/$IMAGE;
+    docker push $DEPLOY_HOST/$IMAGE:$TAG;
+  fi
