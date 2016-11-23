@@ -4,6 +4,9 @@ env:
   - OS=debian DIST=jessie ARCH=armel
   - OS=debian DIST=jessie ARCH=armhf
   - OS=raspbian DIST=jessie ARCH=armhf
+  - OS=debian DIST=testing ARCH=armel
+  - OS=debian DIST=testing ARCH=armhf
+  - OS=raspbian DIST=testing ARCH=armhf
   global:
   - DEBOOTSTRAP=qemu-debootstrap
   - NAMESPACE=ev3dev
