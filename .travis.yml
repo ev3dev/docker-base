@@ -20,6 +20,7 @@ install:
   sudo apt-get update -y && sudo apt-get install -y
   debian-archive-keyring
   qemu-user-static
+  debootstrap
 - if [ "$OS" == "raspbian" ]; then
    wget --directory-prefix=/tmp http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb;
    sudo dpkg -i /tmp/raspbian-archive-keyring_20120528.2_all.deb;
