@@ -4,9 +4,9 @@ env:
   - OS=debian DIST=jessie ARCH=armel
   - OS=debian DIST=jessie ARCH=armhf
   - OS=raspbian DIST=jessie ARCH=armhf
-  - OS=debian DIST=testing ARCH=armel
-  - OS=debian DIST=testing ARCH=armhf
-  - OS=raspbian DIST=testing ARCH=armhf
+  - OS=debian DIST=stretch ARCH=armel
+  - OS=debian DIST=stretch ARCH=armhf
+  - OS=raspbian DIST=stretch ARCH=armhf
   global:
   - DEBOOTSTRAP=qemu-debootstrap
   - NAMESPACE=ev3dev
@@ -29,6 +29,9 @@ install:
 before_script:
 - docker --version
 - export IMAGE=$OS-$DIST-$ARCH-qemu-minbase
+- if [ ! -e /usr/share/debootstrap/scripts/stretch ]; then
+      sudo ln -s /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/stretch;
+  fi
 script:
 - >
   sudo -E /usr/share/docker-engine/contrib/mkimage.sh
