@@ -35,7 +35,7 @@ before_script:
   fi
 script:
 - >
-  sudo -E /usr/share/docker-engine/contrib/mkimage.sh
+  sudo -E /usr/share/docker-ce/contrib/mkimage.sh
   -t $IMAGE
   debootstrap
   --keyring=/usr/share/keyrings/$OS-archive-keyring.gpg
