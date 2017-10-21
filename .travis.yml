@@ -19,10 +19,9 @@ sudo: required
 dist: trusty
 services: docker
 install:
-- >
-  sudo apt-get update -y && sudo apt-get install -y
-  debian-archive-keyring
-  debootstrap
+- sudo apt-get update -y && sudo apt-get install -y debootstrap
+- wget http://mirrors.kernel.org/ubuntu/pool/universe/d/debian-archive-keyring/debian-archive-keyring_2017.6_all.deb &&
+  sudo dpkg -i debian-archive-keyring_2017.6_all.deb
 - wget http://mirrors.kernel.org/ubuntu/pool/universe/q/qemu/qemu-user-static_2.10+dfsg-0ubuntu3_amd64.deb &&
   sudo dpkg -i qemu-user-static_2.10+dfsg-0ubuntu3_amd64.deb
 - if [ "$OS" == "raspbian" ]; then
