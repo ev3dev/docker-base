@@ -7,6 +7,9 @@ env:
   - OS=debian DIST=stretch ARCH=armel
   - OS=debian DIST=stretch ARCH=armhf
   - OS=raspbian DIST=stretch ARCH=armhf
+  - OS=debian DIST=buster ARCH=armel
+  - OS=debian DIST=buster ARCH=armhf
+  - OS=raspbian DIST=buster ARCH=armhf
   global:
   - DEBOOTSTRAP=qemu-debootstrap
   - NAMESPACE=ev3dev
