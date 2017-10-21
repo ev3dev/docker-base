@@ -30,9 +30,6 @@ install:
 before_script:
 - docker --version
 - export IMAGE=$OS-$DIST-$ARCH-qemu-minbase
-- if [ ! -e /usr/share/debootstrap/scripts/stretch ]; then
-      sudo ln -s /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/stretch;
-  fi
 script:
 - >
   sudo -E /usr/share/docker-ce/contrib/mkimage.sh
