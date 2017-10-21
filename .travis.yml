@@ -25,8 +25,8 @@ install:
 - wget http://mirrors.kernel.org/ubuntu/pool/universe/q/qemu/qemu-user-static_2.10+dfsg-0ubuntu3_amd64.deb &&
   sudo dpkg -i qemu-user-static_2.10+dfsg-0ubuntu3_amd64.deb
 - if [ "$OS" == "raspbian" ]; then
-   wget --directory-prefix=/tmp http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb;
-   sudo dpkg -i /tmp/raspbian-archive-keyring_20120528.2_all.deb;
+   wget http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb &&
+   sudo dpkg -i raspbian-archive-keyring_20120528.2_all.deb &&
    export MIRROR=http://archive.raspbian.org/raspbian;
   fi
 before_script:
