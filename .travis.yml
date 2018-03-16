@@ -35,6 +35,7 @@ before_script:
 script:
 - >
   sudo -E /usr/share/docker-ce/contrib/mkimage.sh
+  -d $PWD
   -t $IMAGE
   debootstrap
   --keyring=/usr/share/keyrings/$OS-archive-keyring.gpg
@@ -51,3 +52,5 @@ after_success:
     docker push $NAMESPACE/$IMAGE;
     docker push $NAMESPACE/$IMAGE:$VERSION_TAG;
   fi
+after_failure:
+- cat rootfs/debootstrap/debootstrap.log
