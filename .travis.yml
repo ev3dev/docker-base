@@ -43,6 +43,7 @@ script:
   --keyring=/usr/share/keyrings/$OS-archive-keyring.gpg
   --arch=$ARCH
   --variant=minbase
+  --include=ascii
   $DIST
   $MIRROR
 after_success:
