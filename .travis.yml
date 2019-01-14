@@ -1,9 +1,6 @@
 language: bash
 env:
   matrix:
-  - OS=debian DIST=jessie ARCH=armel
-  - OS=debian DIST=jessie ARCH=armhf
-  - OS=raspbian DIST=jessie ARCH=armhf
   - OS=debian DIST=stretch ARCH=armel
   - OS=debian DIST=stretch ARCH=armhf
   - OS=raspbian DIST=stretch ARCH=armhf
