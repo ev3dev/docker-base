@@ -20,8 +20,8 @@ install:
 - wget http://mirrors.kernel.org/ubuntu/pool/universe/d/debian-archive-keyring/debian-archive-keyring_2017.6_all.deb &&
   sudo dpkg -i debian-archive-keyring_2017.6_all.deb
 - sudo apt install qemu-user-static &&
-  wget http://ftp.us.debian.org/debian/pool/main/q/qemu/qemu-user-static_3.1+dfsg-4_amd64.deb &&
-  sudo dpkg-deb -x qemu-user-static_3.1+dfsg-4_amd64.deb / &&
+  wget http://ftp.us.debian.org/debian/pool/main/q/qemu/qemu-user-static_3.1+dfsg-7_amd64.deb &&
+  sudo dpkg-deb -x qemu-user-static_3.1+dfsg-7_amd64.deb / &&
   echo "QEMU updated successfully!"
 - if [ "$OS" == "raspbian" ]; then
    wget http://archive.raspbian.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb &&
