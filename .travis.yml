@@ -13,12 +13,10 @@ env:
   - secure: iSixWxcGG+BLi0XmkQ3b+4ZQhpPZsEvFdBsorjVG1hnZW26si0OVq9C5fC1HnR6sGvZ7bJPfHlT4FsIwrnF2gPrEvlcHhjsoqLfWSt8sEZjpEx/Pd/IwjnSTG8hr5DUO8/gjKrwIKTd+NAiVu/P8HBC9Z5trhvHBNsjscOF3trX5pIYD/NrAOxqQPswREL2Oj0hfkVGIDeW+ctsN8yO76Gm5qeyyoPyQLl93pBWBfnoHcPxr5KXjTR6XmStkpKW9ApGG0AD3g4JwxyE7HpaWwknnwVDeyp2h8sE2Ozv1AEKXtesFCFCLHnzqpGXuG8FOxynA5T1RVRV6BX0YMPW138yo7mjdoUTJUB83uiN9/BNRSYZNuPVu+myp1bz8RsqLeF/sSU/k8dZkg7Dw43bb2TCaNg8G7FCytpUH9aidJDhf6b+i2Bc7k36Limo5iaa35eULtc9MANi7cx85VLrQjOgrnROKNAljpc6bGhKH8V73pWpZsjOVt9ifVQhd/ABv6/uEHus6a4mhIcIompqBMuUxpZcNbrI4ADHD4XUwVvy0Mqai/U7T8ermMIGYyilXZlTlpCwC7xtDAksivVMUGocACuOVUqcylQKJWnA+7lm4/Ck2ot29hWHMszrR7vi8jhJm3I2XQiuPqwDZSA2JGWpQ6Iqq7o1mwTX15EIdXZs=
   - secure: l8cWUA5/SJf9s6v9XJTHsTT1M0jOsd4ThuZMQKIHoVZvLrklF72f5jSpj4+vEvb3rB+qDL0r01D7H4DEUPtAfXJb5WTEMO400DRFdq2nnn/tV5CSSO3m6HsXPnMQJga9VJBiSeVVWVUN8I5qS5m8851Q6GYqMnKsmvlizfK4sCCv0+n8/ESUUgvahFhQ5nQdsUt9nolZyR2q35BLOC1sFGOoRcdJG7TsdvoFWJgPQatz3+o0UhQadP+JXgBPZIH5bjGk7KjnKUalEvsQAxTtoA+o67uCQXDUu8rnpHmw3Rx/U41mwriSjaKQJYrnPGj28YIE4xqdsyDA5rcbu/Hpj3vJXSToTMF5K2KYsDSAfVxhHw+Xoae7958DIOgObAhm2qg1CzUhaF+8DObrT+r525O+6KlHyFQ02kpzo6QWJu4cxe02/s6L3vmtTCaYgdKkQkzYl2MgibPf7wW/5Kg2UrTGagPjPNs7p42MOmQa5xCp3ov7nSdXedMmu7mx+Y37yY0T8DyTdHGjsxOGz3YhkvdbF3iDBRABSHl6l0FNR5ApiGAmH4OZnoNFpCUcZHeIrdbiKL+zgelgNwgqZYlPbNrsaDXx1pa6Vfyg4c2CBIdPZkf1a3tfW0vTvpKjKkVkkNPrgtXEBmWxlaWFCu7Akn8DY5LtndgGemVTGZjZ9SA=
 sudo: required
-dist: trusty
+dist: bionic
 services: docker
 install:
-- sudo apt-get update -y && sudo apt-get install -y debootstrap dpkg
-- wget http://mirrors.kernel.org/ubuntu/pool/universe/d/debian-archive-keyring/debian-archive-keyring_2017.6_all.deb &&
-  sudo dpkg -i debian-archive-keyring_2017.6_all.deb
+- sudo apt-get update -y && sudo apt-get install -y debootstrap dpkg debian-archive-keyring
 - sudo apt install qemu-user-static &&
   wget http://ftp.us.debian.org/debian/pool/main/q/qemu/qemu-user-static_3.1+dfsg-7_amd64.deb &&
   sudo dpkg-deb -x qemu-user-static_3.1+dfsg-7_amd64.deb / &&
